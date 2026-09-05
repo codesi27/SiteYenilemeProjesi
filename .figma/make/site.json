@@ -1,0 +1,10 @@
+{
+  "description": "Transform your existing website with a fresh design while maintaining your brand identity, enhancing user experience and visual appeal.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

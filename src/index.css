@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+@theme inline {
+  --color-background: #0f1117;
+  --color-foreground: #f0f0f0;
+  --color-card: #1a1f2e;
+  --color-card-foreground: #e8e8e8;
+  --color-primary: #e85d14;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #1e2435;
+  --color-secondary-foreground: #c8cdd8;
+  --color-muted: #262c3e;
+  --color-muted-foreground: #8a94a8;
+  --color-accent: #ff6b24;
+  --color-accent-foreground: #ffffff;
+  --color-border: rgba(255,255,255,0.08);
+  --color-ring: #e85d14;
+  --radius: 4px;
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+* {
+  font-family: var(--font-body);
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0f1117;
+  color: #f0f0f0;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f1117;
+}
+::-webkit-scrollbar-thumb {
+  background: #e85d14;
+  border-radius: 3px;
+}
