@@ -236,7 +236,7 @@ export default function App() {
               AS
             </div>
             <div className="leading-none">
-              <div className="font-[Barlow_Condensed,sans-serif] font-800 text-xl tracking-widest text-white">AS YAPI</div>
+              <div className="font-[Barlow_Condensed,sans-serif] font-800 text-xl tracking-widest text-white">AS YAPI PVC & CAM</div>
               <div className="text-[10px] tracking-[0.2em] text-[#e85d14] uppercase">Trakya'nın Güvenilir Markası</div>
             </div>
           </a>
@@ -461,7 +461,7 @@ export default function App() {
                 <span className="text-[#e85d14] text-xs tracking-[0.3em] uppercase font-semibold">Biz Kimiz</span>
               </div>
               <h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-5xl md:text-6xl uppercase text-white mb-6">
-                AS YAPI<br />Hakkında
+                AS YAPI PVC & CAM<br />Hakkında
               </h2>
               <p className="text-[#8a94a8] leading-relaxed mb-6">
                 35 yılı aşkın tecrübesiyle Trakya'nın güvenilir alüminyum ve cam sistemleri markası olan AS YAPI, Tekirdağ, Edirne ve Kırklareli'nde binlerce projeyi başarıyla tamamlamıştır.
@@ -555,7 +555,7 @@ export default function App() {
               className="absolute font-[Barlow_Condensed,sans-serif] text-9xl font-900 uppercase text-white whitespace-nowrap"
               style={{ top: `${i * 80 - 20}px`, left: `${(i % 2) * -100}px`, letterSpacing: "0.3em" }}
             >
-              AS YAPI &nbsp; ALÜMINYUM &nbsp; CAM &nbsp;
+              AS YAPI PVC & CAM &nbsp; ÇORLU &nbsp; TEKİRDAĞ &nbsp;
             </div>
           ))}
         </div>
@@ -766,7 +766,7 @@ export default function App() {
                   AS
                 </div>
                 <div>
-                  <div className="font-[Barlow_Condensed,sans-serif] font-800 text-lg tracking-widest text-white">AS YAPI</div>
+                  <div className="font-[Barlow_Condensed,sans-serif] font-800 text-lg tracking-widest text-white">AS YAPI PVC & CAM</div>
                   <div className="text-[9px] tracking-[0.2em] text-[#e85d14] uppercase">Trakya'nın Güvenilir Markası</div>
                 </div>
               </div>
@@ -800,7 +800,7 @@ export default function App() {
           </div>
 
           <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-[#8a94a8] text-xs">© 2026 AS YAPI. Tüm hakları saklıdır.</div>
+            <div className="text-[#8a94a8] text-xs">© 2026 AS YAPI PVC & CAM. Tüm hakları saklıdır.</div>
             <div className="text-[#8a94a8] text-xs">www.asyapii.com</div>
           </div>
         </div>
