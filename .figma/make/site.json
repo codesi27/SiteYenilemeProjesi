@@ -1,7 +1,9 @@
 {
-  "description": "Transform your existing website with a fresh design while maintaining your brand identity, enhancing user experience and visual appeal.",
+  "title": "Çorlu Cam Balkon, PVC, Duşakabin & Sineklik | AS YAPI",
+  "description": "Çorlu'da cam balkon, PVC kapı pencere, duşakabin ve sineklik çözümleri. Ölçü, montaj ve ücretsiz keşif için iletişime geçin. Tekirdağ ve çevresine hizmet.",
+  "language": "tr",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,

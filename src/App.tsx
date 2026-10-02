@@ -1,10 +1,83 @@
 import { useState, useEffect } from "react";
+import { getPage, home, pages, SITE, structuredData } from "./seo";
+
+function ServicePage({ page }: { page: (typeof pages)[number] }) {
+  return (
+    <div className="min-h-screen bg-[#0f1117] text-white font-[Outfit,sans-serif]">
+      <nav className="bg-[#0f1117] border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 min-h-20 flex flex-wrap items-center justify-between gap-4 py-4">
+          <a href="/" className="flex items-center gap-3">
+            <span className="w-10 h-10 bg-[#e85d14] flex items-center justify-center font-[Barlow_Condensed,sans-serif] font-900 text-lg">AS</span>
+            <span className="font-[Barlow_Condensed,sans-serif] font-800 text-xl tracking-widest">AS YAPI PVC & Cam Balkon Sistemleri</span>
+          </a>
+          <div className="flex flex-wrap items-center gap-5 text-sm uppercase tracking-wider">
+            <a href="/#hizmetler" className="text-[#c8cdd8] hover:text-[#e85d14]">Hizmetler</a>
+            <a href="#sss" className="text-[#c8cdd8] hover:text-[#e85d14]">SSS</a>
+            <a href="/#iletisim" className="text-[#c8cdd8] hover:text-[#e85d14]">İletişim</a>
+            <a href="tel:+905322713059" className="bg-[#e85d14] px-5 py-2.5 font-semibold">Hemen Ara</a>
+          </div>
+        </div>
+      </nav>
+      <main>
+        <section className="bg-[#1a1f2e] pt-20 pb-16">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-sm text-[#8a94a8] mb-10"><a href="/" className="hover:text-[#e85d14]">Ana Sayfa</a> / {page.label}</div>
+            <div className="w-12 h-0.5 bg-[#e85d14] mb-6" />
+            <h1 className="font-[Barlow_Condensed,sans-serif] font-900 text-5xl md:text-7xl uppercase leading-tight max-w-4xl mb-6">{page.h1}</h1>
+            <p className="text-[#c8cdd8] text-lg leading-relaxed max-w-3xl">{page.intro}</p>
+          </div>
+        </section>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-[minmax(0,2fr)_minmax(260px,1fr)] gap-14">
+            <div className="space-y-12">
+              <div><h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-4xl uppercase mb-4">Sistem ve seçenekler</h2><p className="text-[#c8cdd8] leading-8">{page.details}</p></div>
+              <div><h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-4xl uppercase mb-4">Kullanım alanları</h2><p className="text-[#c8cdd8] leading-8">{page.uses}</p></div>
+              <div><h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-4xl uppercase mb-4">Ölçü ve uygulama</h2><p className="text-[#c8cdd8] leading-8">{page.installation}</p></div>
+              <div><h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-4xl uppercase mb-4">Hizmet bölgesi</h2><p className="text-[#c8cdd8] leading-8">{page.area}</p></div>
+            </div>
+            <aside className="bg-[#1a1f2e] border border-white/5 p-8 h-fit lg:sticky lg:top-8">
+              <div className="text-[#e85d14] text-xs uppercase tracking-[0.3em] font-semibold mb-4">Birlikte planlayalım</div>
+              <h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-3xl uppercase mb-4">Ücretsiz keşif ve fiyat teklifi</h2>
+              <p className="text-[#8a94a8] text-sm leading-relaxed mb-6">Çorlu'da yapınıza uygun çözüm için ölçü ve fiyat bilgisi alın.</p>
+              <a href="tel:+905322713059" className="block bg-[#e85d14] text-center font-semibold uppercase text-sm tracking-wider px-5 py-4 mb-3 hover:bg-[#ff6b24]">0532 271 30 59 · Ara</a>
+              <a href="/#iletisim" className="block border border-white/30 text-center font-semibold uppercase text-sm tracking-wider px-5 py-4 hover:border-[#e85d14]">Keşif formuna git</a>
+            </aside>
+          </div>
+        </section>
+        <section id="sss" className="bg-[#1a1f2e] py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-4xl md:text-5xl uppercase mb-8">Sık sorulan sorular</h2>
+            <div className="grid md:grid-cols-2 gap-4">{page.faq.map(({ question, answer }) => (
+              <div key={question} className="bg-[#0f1117] p-6 border border-white/5">
+                <h3 className="font-[Barlow_Condensed,sans-serif] font-700 text-2xl mb-2">{question}</h3>
+                <p className="text-[#c8cdd8] text-sm leading-relaxed">{answer}</p>
+              </div>
+            ))}</div>
+          </div>
+        </section>
+        <section className="py-16 max-w-7xl mx-auto px-6">
+          <h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-4xl uppercase mb-6">İlgili hizmetler</h2>
+          <div className="flex flex-wrap gap-3">{page.related.map((path) => {
+            const related = getPage(path)!;
+            return <a key={path} href={path} className="border border-white/20 px-5 py-3 text-[#c8cdd8] hover:border-[#e85d14] hover:text-white">{related.label} hakkında bilgi alın →</a>;
+          })}</div>
+        </section>
+      </main>
+      <footer className="bg-[#1a1f2e] border-t border-white/10 py-10"><div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-between gap-6 text-sm text-[#8a94a8]"><span>AS YAPI PVC & Cam Balkon Sistemleri · Çorlu / Tekirdağ</span><a href="mailto:55asyapi@gmail.com" className="hover:text-white">55asyapi@gmail.com</a><a href="/" className="hover:text-white">Ana Sayfa</a></div></footer>
+    </div>
+  );
+}
+
+function NotFound() {
+  return <main className="min-h-screen bg-[#0f1117] text-white flex items-center justify-center px-6"><div className="text-center"><p className="text-[#e85d14] text-sm tracking-widest mb-4">404</p><h1 className="font-[Barlow_Condensed,sans-serif] font-800 text-5xl uppercase mb-4">Sayfa bulunamadı</h1><p className="text-[#c8cdd8] mb-8">Aradığınız sayfa mevcut değil.</p><a href="/" className="inline-block bg-[#e85d14] px-8 py-4 font-semibold">Ana Sayfaya Dön</a></div></main>;
+}
 
 const NAV_LINKS = [
   { label: "Ana Sayfa", href: "#hero" },
   { label: "Hizmetler", href: "#hizmetler" },
+  { label: "SSS", href: "#sss" },
   { label: "Hakkımızda", href: "#hakkimizda" },
-  { label: "Referanslar", href: "#referanslar" },
+  { label: "Galeri", href: "#referanslar" },
   { label: "İletişim", href: "#iletisim" },
 ];
 
@@ -116,83 +189,81 @@ const SERVICES = [
 const STATS = [
   { value: "35+", label: "Yıllık Deneyim" },
   { value: "2.500+", label: "Tamamlanan Proje" },
-  { value: "98%", label: "Müşteri Memnuniyeti" },
-  { value: "7/24", label: "Teknik Destek" },
-];
-
-const TESTIMONIALS = [
-  {
-    name: "Mehmet Yılmaz",
-    location: "Kadıköy, İstanbul",
-    text: "Cam balkon montajında çok titiz çalıştılar. İşçilik kalitesi ve kullanılan malzeme gayet iyi. Kesinlikle tavsiye ederim.",
-    rating: 5,
-  },
-  {
-    name: "Ayşe Kaya",
-    location: "Beşiktaş, İstanbul",
-    text: "Pergola sistemimizi AS YAPI kurdu. Hem ölçüm hem montaj çok hızlı ve temiz oldu. Fiyat-performans açısından mükemmel.",
-    rating: 5,
-  },
-  {
-    name: "Okan Demir",
-    location: "Üsküdar, İstanbul",
-    text: "Balkonumu cam balkon sistemine çevirdim. Kışın da rahatça kullanabiliyorum. Ekip çok profesyonel ve kibar davrandı.",
-    rating: 5,
-  },
+  { value: "7 Gün", label: "07:00–22:00" },
+  { value: "Çorlu", label: "Hizmet Merkezimiz" },
 ];
 
 const GALLERY = [
   {
     url: "https://images.unsplash.com/photo-1616877575565-6908da8619f5?w=600&h=400&fit=crop&auto=format",
-    alt: "Modern cam balkon sistemi",
+    alt: "Camla çevrili balkon için örnek mimari görünüm",
     label: "Cam Balkon",
   },
   {
     url: "https://images.unsplash.com/photo-1766087752966-b9a7b058b7da?w=600&h=400&fit=crop&auto=format",
-    alt: "Motorlu pergola sistemi",
-    label: "Pergola",
+    alt: "Dış mekân için örnek mimari görünüm",
+    label: "Dış Mekân",
   },
   {
     url: "https://images.unsplash.com/photo-1775733924075-11e542629502?w=600&h=400&fit=crop&auto=format",
-    alt: "Modern balkon görünümü",
+    alt: "Cam balkon fikri için örnek balkon görünümü",
     label: "Cam Balkon",
   },
   {
     url: "https://images.unsplash.com/photo-1494884113216-952a0c2c1a30?w=600&h=400&fit=crop&auto=format",
-    alt: "Teras alanı",
-    label: "Tente Sistemi",
+    alt: "Açık teras için örnek görünüm",
+    label: "Teras",
   },
   {
     url: "https://images.unsplash.com/photo-1775733923991-e7223f9f44bc?w=600&h=400&fit=crop&auto=format",
-    alt: "Dış mekan düzenlemesi",
-    label: "Pergola",
+    alt: "Dış alan düzenlemesi için örnek fotoğraf",
+    label: "Dış Mekân",
   },
   {
     url: "https://images.unsplash.com/photo-1595039357995-905cad2933e3?w=600&h=400&fit=crop&auto=format",
-    alt: "Modern bina cephesi",
+    alt: "Pencere ve cephe tasarımına örnek bina",
     label: "Cephe Sistemi",
   },
 ];
 
-function StarRating({ count }: { count: number }) {
-  return (
-    <div className="flex gap-0.5 mb-3">
-      {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} viewBox="0 0 16 16" className="w-4 h-4 fill-[#e85d14]">
-          <path d="M8 1l1.8 3.6L14 5.5l-3 2.9.7 4.1L8 10.4l-3.7 2.1.7-4.1L2 5.5l4.2-.9z" />
-        </svg>
-      ))}
-    </div>
-  );
-}
-
-export default function App() {
+export default function App({ path = typeof window === "undefined" ? "/" : window.location.pathname }: { path?: string }) {
+  const normalizedPath = path === "/" ? "/" : path.replace(/\/$/, "");
+  const servicePage = getPage(normalizedPath);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [formData, setFormData] = useState({ name: "", phone: "", service: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [activePhone, setActivePhone] = useState<number | null>(null);
+
+  useEffect(() => {
+    const page = servicePage || home;
+    if (normalizedPath !== "/" && !servicePage) {
+      document.title = "Sayfa Bulunamadı | AS YAPI";
+      document.querySelector('meta[name="robots"]')?.setAttribute("content", "noindex, follow");
+      document.querySelector('link[rel="canonical"]')?.remove();
+      return;
+    }
+    document.title = page.title;
+    const values: [string, string, string][] = [
+      ["meta", "name", "description"], ["link", "rel", "canonical"],
+      ["meta", "property", "og:url"], ["meta", "property", "og:title"],
+      ["meta", "property", "og:description"], ["meta", "name", "twitter:title"],
+      ["meta", "name", "twitter:description"],
+    ];
+    const content = [page.description, `${SITE}${page.path}`, `${SITE}${page.path}`, page.title, page.description, page.title, page.description];
+    values.forEach(([tag, attribute, key], index) => {
+      const element = document.querySelector(`${tag}[${attribute}="${key}"]`) || document.head.appendChild(document.createElement(tag));
+      element.setAttribute(attribute, key);
+      element.setAttribute(tag === "link" ? "href" : "content", content[index]);
+    });
+    if (!document.querySelector('script[type="application/ld+json"]')) {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.textContent = JSON.stringify(structuredData(page));
+      document.head.appendChild(script);
+    }
+  }, [normalizedPath, servicePage]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -221,6 +292,9 @@ export default function App() {
     setFormData({ name: "", phone: "", service: "", message: "" });
   };
 
+  if (servicePage) return <ServicePage page={servicePage} />;
+  if (normalizedPath !== "/") return <NotFound />;
+
   return (
     <div className="min-h-full bg-[#0f1117] text-[#f0f0f0] font-[Outfit,sans-serif] overflow-x-hidden">
 
@@ -236,8 +310,8 @@ export default function App() {
               AS
             </div>
             <div className="leading-none">
-              <div className="font-[Barlow_Condensed,sans-serif] font-800 text-xl tracking-widest text-white">AS YAPI PVC & CAM</div>
-              <div className="text-[10px] tracking-[0.2em] text-[#e85d14] uppercase">Trakya'nın Güvenilir Markası</div>
+              <div className="font-[Barlow_Condensed,sans-serif] font-800 text-xl tracking-widest text-white">AS YAPI PVC & Cam Balkon Sistemleri</div>
+              <div className="text-[10px] tracking-[0.2em] text-[#e85d14] uppercase">Çorlu / Tekirdağ</div>
             </div>
           </a>
 
@@ -347,19 +421,18 @@ export default function App() {
             </div>
 
             <h1
-              className="font-[Barlow_Condensed,sans-serif] font-900 text-7xl md:text-8xl lg:text-9xl uppercase leading-none tracking-tight text-white mb-6"
+              className="font-[Barlow_Condensed,sans-serif] font-900 text-5xl md:text-7xl lg:text-8xl uppercase leading-none tracking-tight text-white mb-6"
               style={{ fontStyle: "italic" }}
             >
-              YAPI
-              <br />
-              <span className="text-[#e85d14]">ÇÖZÜM</span>
-              <br />
-              MERKEZİ
+              Çorlu <span className="text-[#e85d14]">Cam Balkon,</span>
+              <br />{" "}
+              PVC ve Yapı Sistemleri
             </h1>
 
             <p className="text-lg text-[#c8cdd8] max-w-xl leading-relaxed mb-10">
-              Alüminyum, cam balkon, küpeşte, duşakabin ve sineklik sistemlerinde Trakya'nın lider markası.
-              Ücretsiz keşif ve ölçüm hizmetimizden yararlanın.
+              Çorlu merkezli AS YAPI ile cam balkon, duşakabin, sineklik, PVC kapı ve pencere,
+              cam kapı, alüminyum sistemleri, küpeşte ve çelik kapı ihtiyaçlarınız için görüşün.
+              Pimapen tamiri ve PVC pencere ayarı konusunda da bilgi alın; ücretsiz keşif isteyin.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -428,11 +501,17 @@ export default function App() {
                   </h3>
                   <p className="text-[#8a94a8] text-sm leading-relaxed">{s.desc}</p>
                 </div>
+                <a href={["/aluminyum-sistemleri", "/pvc-kapi-pencere", "/cam-kapi", "/cam-balkon", "/kupeste", "/dusakabin", "/sineklik"][i]} className="text-[#e85d14] text-sm font-semibold hover:text-white">{s.title} hakkında bilgi alın →</a>
                 <div className="mt-auto">
                   <div className="w-0 h-0.5 bg-[#e85d14] group-hover:w-full transition-all duration-400" />
                 </div>
               </div>
             ))}
+          </div>
+          <div className="flex flex-wrap gap-6 mt-8 text-sm">
+            <a href="/pimapen-tamiri" className="text-[#e85d14] hover:text-white">Pimapen tamiri ve PVC pencere ayarı →</a>
+            <a href="/celik-kapi" className="text-[#e85d14] hover:text-white">Çelik kapı sistemleri →</a>
+            <a href="#iletisim" className="text-[#e85d14] hover:text-white">İletişim ve ücretsiz keşif →</a>
           </div>
         </div>
       </section>
@@ -445,7 +524,8 @@ export default function App() {
               <div className="aspect-[4/3] bg-[#262c3e] overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1766087752966-b9a7b058b7da?w=800&h=600&fit=crop&auto=format"
-                  alt="AS YAPI Pergola Uygulaması"
+                  alt="Dış mekân düzenlemesi için örnek mimari fotoğraf"
+                  loading="lazy"
                   className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
@@ -461,10 +541,10 @@ export default function App() {
                 <span className="text-[#e85d14] text-xs tracking-[0.3em] uppercase font-semibold">Biz Kimiz</span>
               </div>
               <h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-5xl md:text-6xl uppercase text-white mb-6">
-                AS YAPI PVC & CAM<br />Hakkında
+                AS YAPI PVC & Cam Balkon Sistemleri<br />Hakkında
               </h2>
               <p className="text-[#8a94a8] leading-relaxed mb-6">
-                35 yılı aşkın tecrübesiyle Trakya'nın güvenilir alüminyum ve cam sistemleri markası olan AS YAPI, Tekirdağ, Edirne ve Kırklareli'nde binlerce projeyi başarıyla tamamlamıştır.
+                35 yılı aşkın deneyime sahip AS YAPI, Çorlu merkezli olarak Tekirdağ ve çevresinde yapı sistemleri üzerine çalışır. Edirne, Kırklareli ve Trakya genelindeki talepleriniz için de bizimle görüşebilirsiniz.
               </p>
               <p className="text-[#8a94a8] leading-relaxed mb-10">
                 Alüminyum sistemlerden cam balkona, küpeşteden duşakabine, sineklikten cam kapıya kadar geniş ürün yelpazemizle hizmetinizdeyiz. Her projede müşteri memnuniyetini ve uzun ömürlü kaliteyi ön planda tutuyoruz.
@@ -473,11 +553,11 @@ export default function App() {
               <div className="grid grid-cols-2 gap-4">
                 {[
                   "Ücretsiz Keşif & Ölçüm",
-                  "Kendi Üretim Atölyesi",
-                  "Profesyonel Montaj Ekibi",
-                  "7/24 Teknik Destek",
-                  "Garantili İşçilik",
-                  "Rekabetçi Fiyatlar",
+                  "Çorlu Merkezli Hizmet",
+                  "Ölçüye Uygun Çözümler",
+                  "Haftanın 7 Günü İletişim",
+                  "PVC Pencere Bakımı",
+                  "Montaj ve Uygulama",
                 ].map((f) => (
                   <div key={f} className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-[#e85d14] rounded-full flex-shrink-0" />
@@ -495,11 +575,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-0.5 bg-[#e85d14]" />
-            <span className="text-[#e85d14] text-xs tracking-[0.3em] uppercase font-semibold">Projelerimiz</span>
+            <span className="text-[#e85d14] text-xs tracking-[0.3em] uppercase font-semibold">Görsel İlham</span>
           </div>
           <h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-5xl md:text-6xl uppercase text-white mb-16">
-            Referans Galerisi
+            Görsel Galeri
           </h2>
+          <p className="text-[#8a94a8] text-sm mb-8">Bu fotoğraflar örnek görsellerdir; AS YAPI uygulamalarına ait değildir.</p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
             {GALLERY.map((item, i) => (
@@ -507,6 +588,7 @@ export default function App() {
                 <img
                   src={item.url}
                   alt={item.alt}
+                  loading="lazy"
                   className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -520,26 +602,22 @@ export default function App() {
         </div>
       </section>
 
-      {/* ─── TESTIMONIALS ─── */}
-      <section className="py-28 bg-[#1a1f2e]">
+      {/* ─── FAQ ─── */}
+      <section id="sss" className="py-28 bg-[#1a1f2e]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-0.5 bg-[#e85d14]" />
-            <span className="text-[#e85d14] text-xs tracking-[0.3em] uppercase font-semibold">Müşteri Yorumları</span>
+            <span className="text-[#e85d14] text-xs tracking-[0.3em] uppercase font-semibold">Bilgi Alın</span>
           </div>
           <h2 className="font-[Barlow_Condensed,sans-serif] font-800 text-5xl md:text-6xl uppercase text-white mb-16">
-            Müşterilerimiz<br />Ne Diyor?
+            Sık Sorulan<br />Sorular
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="bg-[#0f1117] p-8 border border-white/5 hover:border-[#e85d14]/30 transition-colors duration-300">
-                <StarRating count={t.rating} />
-                <p className="text-[#8a94a8] text-sm leading-relaxed mb-6 italic">"{t.text}"</p>
-                <div className="border-t border-white/5 pt-4">
-                  <div className="font-semibold text-white text-sm">{t.name}</div>
-                  <div className="text-[#e85d14] text-xs mt-0.5">{t.location}</div>
-                </div>
+            {home.faq.map(({ question, answer }) => (
+              <div key={question} className="bg-[#0f1117] p-8 border border-white/5 hover:border-[#e85d14]/30 transition-colors duration-300">
+                <h3 className="font-[Barlow_Condensed,sans-serif] font-700 text-2xl text-white mb-3">{question}</h3>
+                <p className="text-[#8a94a8] text-sm leading-relaxed">{answer}</p>
               </div>
             ))}
           </div>
@@ -555,7 +633,7 @@ export default function App() {
               className="absolute font-[Barlow_Condensed,sans-serif] text-9xl font-900 uppercase text-white whitespace-nowrap"
               style={{ top: `${i * 80 - 20}px`, left: `${(i % 2) * -100}px`, letterSpacing: "0.3em" }}
             >
-              AS YAPI PVC & CAM &nbsp; ÇORLU &nbsp; TEKİRDAĞ &nbsp;
+              AS YAPI PVC & Cam Balkon Sistemleri &nbsp; ÇORLU &nbsp; TEKİRDAĞ &nbsp;
             </div>
           ))}
         </div>
@@ -667,7 +745,7 @@ export default function App() {
 
               <div className="border border-white/5 p-6 bg-[#1a1f2e]">
                 <div className="text-xs text-[#e85d14] uppercase tracking-widest mb-2">Çalışma Saatleri</div>
-                <div className="text-white font-medium">Her Gün — 7/24</div>
+                <div className="text-white font-medium">Haftanın 7 Günü</div>
                 <div className="text-[#8a94a8] text-sm">07:00 – 22:00</div>
               </div>
             </div>
@@ -682,9 +760,9 @@ export default function App() {
                       </svg>
                     </div>
                     <h3 className="font-[Barlow_Condensed,sans-serif] font-700 text-3xl text-white uppercase mb-3">
-                      Başvurunuz Alındı!
+                      E-posta Uygulamanız Açıldı
                     </h3>
-                    <p className="text-[#8a94a8]">En kısa sürede sizinle iletişime geçeceğiz.</p>
+                    <p className="text-[#8a94a8]">Talebinizi göndermek için e-postayı uygulamanızdan onaylayın.</p>
                   </div>
                 </div>
               ) : (
@@ -727,6 +805,8 @@ export default function App() {
                       <option>Alüminyum Sistemler</option>
                       <option>Kapı & Pencere Sistemleri</option>
                       <option>Cam Balkon</option>
+                      <option>Pimapen Tamiri</option>
+                      <option>Çelik Kapı</option>
                       <option>Küpeşte Sistemleri</option>
                       <option>Duşakabin</option>
                       <option>Sineklik Sistemleri</option>
@@ -766,8 +846,8 @@ export default function App() {
                   AS
                 </div>
                 <div>
-                  <div className="font-[Barlow_Condensed,sans-serif] font-800 text-lg tracking-widest text-white">AS YAPI PVC & CAM</div>
-                  <div className="text-[9px] tracking-[0.2em] text-[#e85d14] uppercase">Trakya'nın Güvenilir Markası</div>
+                  <div className="font-[Barlow_Condensed,sans-serif] font-800 text-lg tracking-widest text-white">AS YAPI PVC & Cam Balkon Sistemleri</div>
+                  <div className="text-[9px] tracking-[0.2em] text-[#e85d14] uppercase">Çorlu / Tekirdağ</div>
                 </div>
               </div>
               <p className="text-[#8a94a8] text-sm leading-relaxed">
@@ -778,10 +858,10 @@ export default function App() {
             <div>
               <div className="text-xs text-[#e85d14] uppercase tracking-widest mb-4">Hizmetler</div>
               <ul className="space-y-2">
-                {["Alüminyum Sistemler", "Kapı & Pencere Sistemleri", "Cam Balkon", "Küpeşte Sistemleri", "Duşakabin", "Sineklik Sistemleri"].map((s) => (
-                  <li key={s}>
-                    <a href="#hizmetler" className="text-[#8a94a8] text-sm hover:text-white transition-colors">
-                      {s}
+                {pages.map((s) => (
+                  <li key={s.path}>
+                    <a href={s.path} className="text-[#8a94a8] text-sm hover:text-white transition-colors">
+                      {s.label}
                     </a>
                   </li>
                 ))}
@@ -800,7 +880,7 @@ export default function App() {
           </div>
 
           <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-[#8a94a8] text-xs">© 2026 AS YAPI PVC & CAM. Tüm hakları saklıdır.</div>
+            <div className="text-[#8a94a8] text-xs">© 2026 AS YAPI PVC & Cam Balkon Sistemleri. Tüm hakları saklıdır.</div>
             <div className="text-[#8a94a8] text-xs">www.asyapii.com</div>
           </div>
         </div>
