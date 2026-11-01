@@ -1,6 +1,6 @@
-import { readFile, writeFile, mkdtemp, rm } from "node:fs/promises";
+import { readFile, writeFile, mkdtemp, mkdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import ts from "typescript";
 import React from "react";
@@ -19,6 +19,7 @@ async function compile(source, target, jsx = false) {
   }).outputText;
   if (jsx) {
     result = result.replaceAll('from "./seo"', 'from "./seo.mjs"')
+      .replaceAll('from "./projects"', 'from "./projects.mjs"')
       .replaceAll('from "react"', `from "${import.meta.resolve("react")}"`)
       .replaceAll('from "react/jsx-runtime"', `from "${import.meta.resolve("react/jsx-runtime")}"`);
   }
@@ -27,11 +28,12 @@ async function compile(source, target, jsx = false) {
 
 try {
   await compile("src/seo.ts", "seo.mjs");
+  await compile("src/projects.ts", "projects.mjs");
   await compile("src/App.tsx", "App.mjs", true);
   const { default: App } = await import(pathToFileURL(join(temp, "App.mjs")));
-  const { home, pages, SITE, structuredData } = await import(pathToFileURL(join(temp, "seo.mjs")));
+  const { home, pages, articles, SITE, structuredData } = await import(pathToFileURL(join(temp, "seo.mjs")));
 
-  for (const page of [home, ...pages]) {
+  for (const page of [home, ...pages, ...articles]) {
     const url = `${SITE}${page.path}`;
     const rendered = renderToString(React.createElement(App, { path: page.path }));
     const metadata = `
@@ -42,7 +44,7 @@ try {
     <meta property="og:url" content="${escape(url)}" />
     <meta property="og:title" content="${escape(page.title)}" />
     <meta property="og:description" content="${escape(page.description)}" />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escape(page.title)}" />
     <meta name="twitter:description" content="${escape(page.description)}" />
     <script type="application/ld+json">${JSON.stringify(structuredData(page)).replaceAll("<", "\\u003c")}</script>`;
@@ -51,7 +53,9 @@ try {
       .replace(/\s*<(?:meta|link)\b[^>]*\b(?:name|property|rel)="(?:description|canonical|og:type|og:url|og:title|og:description|twitter:card|twitter:title|twitter:description)"[^>]*>/g, "")
       .replace("</head>", `${metadata}\n  </head>`)
       .replace('<div id="root"></div>', `<div id="root">${rendered}</div>`);
-    await writeFile(join(outDir, page.path === "/" ? "index.html" : `${page.path.slice(1)}.html`), html);
+    const output = page.path === "/" ? join(outDir, "index.html") : join(outDir, `${page.path.slice(1)}.html`);
+    await mkdir(dirname(output), { recursive: true });
+    await writeFile(output, html);
   }
   const notFound = renderToString(React.createElement(App, { path: "/404" }));
   await writeFile(join(outDir, "404.html"), template.replace(/<title>[^<]*<\/title>/, "<title>Sayfa Bulunamadı | AS YAPI</title>")

@@ -47,6 +47,27 @@ body {
   overflow-x: hidden;
 }
 
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(232, 93, 20, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 93, 20, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
